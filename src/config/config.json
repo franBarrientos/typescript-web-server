@@ -1,0 +1,23 @@
+{
+    "development": {
+      "username": "root",
+      "password": "franco19",
+      "database": "school",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
+    },
+    "test": {
+      "username": "root",
+      "password": "franco19",
+      "database": "school_test",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
+    },
+    "production": {
+      "username": "root",
+      "password": "franco19",
+      "database": "school_production",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
+    }
+  }
