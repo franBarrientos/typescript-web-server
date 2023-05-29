@@ -1,12 +1,12 @@
-import { Actor } from "./actor.model";
+import { Phone } from "./phone.model";
 import { User } from "./user.model";
 
 export default [
-    Actor,User
+    Phone,User
 ]
 
 
 export {
-    Actor,
+    Phone,
     User
 }

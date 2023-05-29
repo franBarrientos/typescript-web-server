@@ -2,13 +2,18 @@ import { Router } from "express";
 import fs from "fs";
 
 const router = Router();
+const pathRouter = __dirname
 
-const routeFiles = fs.readdirSync(__dirname);
-routeFiles.forEach(async (route) => {
-  const routeName = route.split(".")[0];
-  if (routeName !== "index" && !route.endsWith(".map")) {
-    const routePath = await import(`./${route}`);
-    router.use(`/${routeName}`, routePath.default);
+const directoryFiles = fs.readdirSync(pathRouter);
+
+const getfileName = (fileName: string) => fileName.split(".")[0];
+
+directoryFiles.forEach(async (file) => {
+  const fileName = getfileName(file);
+  if (fileName !== "index" && !file.endsWith(".map")) {
+    const routePath = await import(`./${file}`);
+    router.use(`/${fileName}`, routePath.default);
   }
 });
+
 export default router;

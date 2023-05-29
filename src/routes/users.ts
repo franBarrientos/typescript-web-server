@@ -1,6 +1,6 @@
 import express from "express";
 import userController from "../controllers/userController";
-import { userValidator, updateValidator } from "../validators/userValidator";
+import { userValidator, updateValidator } from "../middlewares/userValidator";
 const router = express();
 
 router

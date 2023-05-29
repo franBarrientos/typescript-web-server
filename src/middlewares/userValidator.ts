@@ -17,20 +17,31 @@ const validateAttributelDb = (atributte:string, exist:boolean = true)=>async (va
   });
   if (user && !exist) throw new Error("Exist this email");
   if (!user && exist) throw new Error("Not Exist this User");
+  return true;
 };
+
+const validateGender =  (gender:string)=>{
+  const genders = ["female", "male"]
+  if (!genders.includes(gender)) {
+    throw new Error("gender doesn't exist");
+  }
+  return true
+}
 
 
 export const userValidator = [
   check("email").exists().notEmpty().isLength({ min: 2, max: 50 }),
   check("firstName").exists().notEmpty().isString().isLength({ min: 2, max: 50 }),
   check("lastName").exists().notEmpty().isString().isLength({ min: 2, max: 50 }),
+  check("gender").exists().custom(validateGender),
   check("email").isEmail().custom(validateAttributelDb("email", false)),
   (req: Request, res: Response, next: NextFunction) => {
     try {
+      req.body = "gfgfg";
       validationResult(req).throw();
       next();
     } catch (error) {
-      responseError(res, "ERROR_USER_VALIDATOR", "Already exist this user");
+      responseError(res, "ERROR_USER_VALIDATOR", error);
     }
   },
 ];
@@ -47,3 +58,25 @@ export const updateValidator = [
         }
     }
 ]
+
+const checkIfEmailExistDB = async(email:string)=>{
+  const user = await User.findOne({where: {email}})
+  if(!user)throw new Error("Email doesn't exist in DB");
+  if(user)return true
+}
+
+export const loginValidator = [
+  check("email").exists().notEmpty().isEmail(),
+  check("email").custom(checkIfEmailExistDB),
+  check("password").exists().notEmpty(),
+  (req:Request, res:Response, next:NextFunction)=>{
+    try {
+        validationResult(req).throw();
+        next();
+    } catch (error) {
+        responseError(res, "ERROR_VALIDATION_UPDATE", error)
+    }
+}
+]
+
+

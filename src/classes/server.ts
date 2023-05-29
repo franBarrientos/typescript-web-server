@@ -35,7 +35,8 @@ export class Server {
       await synchronizeModels()
       console.log("Database connected Succesfuly")
     } catch (error) {
-      throw new Error("Can't Connect to DB" +error)
+      throw new Error("Can't Connect to DB")
+      console.log(error)
     }
   }
 }
